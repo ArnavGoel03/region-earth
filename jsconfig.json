@@ -1,0 +1,23 @@
+{
+  // Editor configuration only. Nothing here compiles anything: the site ships
+  // the same .js files it is written in. Its one job is to tell the language
+  // server that this is a modern ES-module project and that WebGPU globals
+  // exist, which they do at runtime but not in the default DOM lib.
+  "compilerOptions": {
+    "target": "ES2022",
+    "module": "ESNext",
+    "moduleResolution": "bundler",
+    "allowJs": true,
+    "checkJs": false,
+    "noEmit": true,
+    "lib": ["ES2022", "DOM", "DOM.Iterable"]
+  },
+  "include": [
+    "app.js",
+    "globe/**/*.js",
+    "sw.js",
+    "build/**/*.mjs",
+    "test/**/*.js",
+    "build/webgpu-types/dist/index.d.ts"
+  ]
+}

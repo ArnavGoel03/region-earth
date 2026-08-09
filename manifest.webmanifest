@@ -1,0 +1,14 @@
+{
+  "name": "Meridian, an interactive model of the Earth",
+  "short_name": "Meridian",
+  "description": "A 3D Earth drawn from real vector borders and a dot field sampled from real geography.",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "any",
+  "background_color": "#08090B",
+  "theme_color": "#08090B",
+  "icons": [
+    { "src": "./icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any" }
+  ]
+}

@@ -1,0 +1,11 @@
+node_modules/
+.DS_Store
+.vercel/
+build/*.tgz
+build/world-atlas/
+build/world-countries/
+build/topojson-client/
+build/fontsource-variable-archivo/
+build/fontsource-public-sans/
+build/fontsource-ibm-plex-mono/
+build/webgpu-types/

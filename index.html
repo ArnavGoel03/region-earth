@@ -1,0 +1,153 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <title>Meridian, an interactive model of the Earth</title>
+    <meta
+      name="description"
+      content="A 3D Earth you can turn in your hands. Every country drawn from real vector borders, every land dot sampled from real geography, rendered on WebGPU with a WebGL2 fallback."
+    />
+    <meta name="theme-color" content="#08090B" />
+    <meta name="color-scheme" content="dark" />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Meridian, an interactive model of the Earth" />
+    <meta
+      property="og:description"
+      content="Turn the globe, pick any country, read what is actually there. WebGPU with a WebGL2 fallback."
+    />
+
+    <link rel="icon" href="./icon.svg" type="image/svg+xml" />
+    <link rel="manifest" href="./manifest.webmanifest" />
+
+    <!-- The faces start downloading alongside the stylesheet rather than after
+         it, which is the difference between text swapping in and text arriving
+         already set. -->
+    <link
+      rel="preload"
+      href="./fonts/archivo-variable.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
+    <link
+      rel="preload"
+      href="./fonts/public-sans-400.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
+    <link
+      rel="preload"
+      href="./fonts/plex-mono-400.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
+    <link rel="preload" href="./data/borders.bin" as="fetch" crossorigin />
+    <link rel="preload" href="./data/idmap.bin" as="fetch" crossorigin />
+
+    <link rel="stylesheet" href="./styles.css" />
+    <script type="module" src="./app.js"></script>
+  </head>
+
+  <body>
+    <div class="stage" id="stage"></div>
+
+    <div class="boot" id="boot">
+      <p class="eyebrow">Assembling the Earth</p>
+      <div class="bar" id="boot-bar"></div>
+      <p class="eyebrow" id="boot-note">Loading geography</p>
+    </div>
+
+    <div class="chrome" id="chrome" hidden>
+      <header class="lockup">
+        <h1>MERI<span class="mark">D</span>IAN</h1>
+        <p>
+          Real borders, real coastlines, one dot per sampled square of land.
+        </p>
+      </header>
+
+      <div class="finder">
+        <label class="visually-hidden" for="search">Search for a country</label>
+        <input
+          id="search"
+          type="search"
+          placeholder="Search a country  /"
+          autocomplete="off"
+          spellcheck="false"
+          role="combobox"
+          aria-expanded="false"
+          aria-controls="results"
+          aria-autocomplete="list"
+        />
+        <ul id="results" role="listbox" aria-label="Search results"></ul>
+      </div>
+
+      <section class="panel readout" id="readout" data-empty="true" aria-live="polite">
+        <p class="eyebrow" id="eyebrow">Under the cursor</p>
+        <h2 id="place">Open ocean</h2>
+        <p class="official" id="official">Drag to turn the globe. Click to pin a country.</p>
+        <div class="coords" id="coords" hidden>
+          <span id="lat">--.--&deg; N</span>
+          <span id="lon">---.--&deg; E</span>
+        </div>
+        <dl class="facts" id="facts"></dl>
+        <div class="neighbours" id="neighbours"></div>
+      </section>
+
+      <aside class="callouts" aria-label="Model telemetry">
+        <div class="callout">
+          <span class="value" id="stat-dots">0</span>
+          <span class="label">Land dots</span>
+        </div>
+        <div class="callout">
+          <span class="value" id="stat-countries">0</span>
+          <span class="label">Countries</span>
+        </div>
+        <div class="callout">
+          <span class="value" id="stat-routes" data-cool="true">0</span>
+          <span class="label">Routes</span>
+        </div>
+      </aside>
+
+      <p class="panel notice" id="notice" hidden></p>
+
+      <div class="panel controls">
+        <div class="toggles" role="group" aria-label="Layers">
+          <button class="toggle" type="button" data-layer="borders" aria-pressed="true">
+            Borders
+          </button>
+          <button class="toggle" type="button" data-layer="graticule" aria-pressed="true">
+            Grid
+          </button>
+          <button class="toggle" type="button" data-layer="network" aria-pressed="false">
+            Network
+          </button>
+        </div>
+
+        <div class="slider">
+          <label for="density">Density</label>
+          <!-- No value here on purpose: app.js positions this from FIELD.spacing
+               so the starting density has exactly one definition. -->
+          <input id="density" type="range" min="0" max="100" step="1" />
+        </div>
+
+        <button class="toggle" type="button" id="reset">Reset view</button>
+
+        <div class="status">
+          <span class="api" id="api" data-api="">--</span>
+          <span id="fps">-- fps</span>
+          <span id="version">v--</span>
+        </div>
+      </div>
+    </div>
+
+    <noscript>
+      <p class="panel notice notice-fixed">
+        This model is drawn with JavaScript and a GPU. Enable JavaScript to turn the globe.
+      </p>
+    </noscript>
+  </body>
+</html>
