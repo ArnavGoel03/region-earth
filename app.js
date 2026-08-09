@@ -780,11 +780,15 @@ function expose() {
    rather than on filling a cache it will not read until the second visit. */
 function registerWorker() {
   if (!("serviceWorker" in navigator) || location.protocol === "file:") return;
-  window.addEventListener("load", () => {
+  const register = () =>
     navigator.serviceWorker
       .register(`./sw.js?v=${VERSION}`)
       .catch((err) => console.warn("service worker:", err.message));
-  });
+  /* This runs once boot has resolved, which is after several network round
+     trips, so load has almost always fired already. A listener added after its
+     event will never run, and the worker silently never registered. */
+  if (document.readyState === "complete") register();
+  else window.addEventListener("load", register, { once: true });
 }
 
 boot().then(registerWorker).catch((err) => {

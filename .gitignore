@@ -9,3 +9,5 @@ build/fontsource-variable-archivo/
 build/fontsource-public-sans/
 build/fontsource-ibm-plex-mono/
 build/webgpu-types/
+.vercel
+.env*
