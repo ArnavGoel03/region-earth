@@ -16,7 +16,7 @@ Live: <https://region-earth.vercel.app>
   country's dots and border on the sphere.
 - Search any of 241 countries and territories by name, ISO alpha-2 or alpha-3,
   or official long form. The camera slerps to it.
-- Toggle borders, the 15 degree graticule, and a network overlay of 40 real
+- Toggle borders, the 15 degree graticule, and a network overlay of 48 real
   cities with great-circle arcs between them. Arc labels quote the physical
   floor for light in fibre, which is a distance calculation and is labelled as
   such, not a measured latency.
