@@ -11,3 +11,4 @@ build/fontsource-ibm-plex-mono/
 build/webgpu-types/
 .vercel
 .env*
+artifact.html
